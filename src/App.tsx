@@ -1,26 +1,27 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import StockTable from './components/stock-table';
+import useStockData from './hooks/use-stock-data';
+import { useDispatch } from 'react-redux';
+import { AppDispatch } from './app/store';
+import StockDialog from './components/stock-dialog';
+import { setIsDialogOpen } from './features/stock/stock-slice';
+import './App.css'
 
-function App() {
+const App: React.FC = () => {
+  const dispatch = useDispatch<AppDispatch>();
+
+  useStockData();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <div className="centered-content">
+        <h1>Stock Price App</h1>
+        <button onClick={() => dispatch(setIsDialogOpen(true))}>Select Stock</button>
+        <StockDialog />
+        <StockTable />
+      </div>
     </div>
   );
-}
+};
 
 export default App;
